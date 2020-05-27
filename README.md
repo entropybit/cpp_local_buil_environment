@@ -13,7 +13,7 @@ This script can be used to automatically setup a uniform build environment on ea
 The network configuration as well as key exchanges however are a necessary prequisite for 
 executing such C++ projects on a MPI cluster and are not (yet?) handlede in this script.
 
-### Useage
+## Useage
 
 Just specify `HOME=...`
 and then after adding execution right with
