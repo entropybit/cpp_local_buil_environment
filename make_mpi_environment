@@ -6,7 +6,7 @@ mkdir $HOME/share
 cd $HOME/share
 
 wget ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-9.3.0/gcc-9.3.0.tar.gz
-tar xzf gcc-9.3.0
+tar xzf gcc-9.3.0.tar.gz
 cd gcc-9.3.0
 ./contrib/download_prerequisites
 cd ..
