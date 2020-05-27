@@ -1,4 +1,4 @@
-# cpp_local_build_environment
+# A script for automatically making a C++ build environment wtihin /home, or any other folder.
 
 This is a script for automatic setup of a build environment within the home folder. Here the two folders $HOME/opt and $HOME/shared are used as install target, and folder where files are downloaded to and compiled in.
 
@@ -13,7 +13,7 @@ This script can be used to automatically setup a uniform build environment on ea
 The network configuration as well as key exchanges however are a necessary prequisite for 
 executing such C++ projects on a MPI cluster and are not (yet?) handlede in this script.
 
-## Useage
+### Useage
 
 Just specify `HOME=...`
 and then after adding execution right with
