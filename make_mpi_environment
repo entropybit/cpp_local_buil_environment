@@ -61,22 +61,29 @@ function make_zlib {
     make install
 }
 
-function rosetta {
+
+function make_rosetta {
     # this requires the archive file already existing in folder
     cd $HOME/share
     tar xzf rosetta_src_3.11_bundle.tgz
-    cd rosetta_src_3.11_bundle/main/source
-    ./scons.py -j$1 mode=release extras=mpi $HOME/opt/bin       
+    cd rosetta_src_2019.35.60890_bundle/main/source
+    ./scons.py -j$1 mode=release extras=mpi bin       
+    cd bin
+    cp -r * $HOME/opt/bin
     
 }
-
 # base c++ cluster
 make_gcc
 make_openmpi
 make_boost
 
+
+export PATH=$HOME/opt/bin:$PATH
+export LD_LIBRARY_PATH=$HOME/opt/lib64:$LD_LIBRARY_PATH
+
+
 # rosetta stuff 
 make_scons
 make_zlib
-
+make_rosetta 40 # number of cores to user for compiling <- system dependent
 
