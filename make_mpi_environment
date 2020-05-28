@@ -3,34 +3,80 @@ HOME=/home/mayer
 mkdir $HOME/opt
 mkdir $HOME/share
 
-cd $HOME/share
+function make_gcc {
 
-wget ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-9.3.0/gcc-9.3.0.tar.gz
-tar xzf gcc-9.3.0.tar.gz
-cd gcc-9.3.0
-./contrib/download_prerequisites
-cd ..
-mkdir objdir
-cd objdir
-$PWD/../gcc-9.3.0/configure --prefix=$HOME/opt/ --enable-languages=c,c++,fortran --disable-multilib
-make -j
-make install
+    cd $HOME/share
+    wget ftp://ftp.mpi-sb.mpg.de/pub/gnu/mirror/gcc.gnu.org/pub/gcc/releases/gcc-9.3.0/gcc-9.3.0.tar.gz
+    tar xzf gcc-9.3.0.tar.gz
+    cd gcc-9.3.0
+    ./contrib/download_prerequisites
+    cd ..
+    mkdir objdir
+    cd objdir
+    $PWD/../gcc-9.3.0/configure --prefix=$HOME/opt/ --enable-languages=c,c++,fortran --disable-multilib
+    make -j
+    make install    
 
-export PATH=$HOME/opt/bin:$PATH
-export LD_LIBRARY_PATH=$HOME/opt/lib64:$LD_LIBRARY_PATH
+    export PATH=$HOME/opt/bin:$PATH
+    export LD_LIBRARY_PATH=$HOME/opt/lib64:$LD_LIBRARY_PATH
+}
 
-cd $HOME/share
-wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-4.0.3.tar.gz
-tar xzf openmpi-4.0.3.tar.gz
-cd openmpi-4.0.3
-./configure --prefix=$HOME/opt
-make all install
+function make_openmpi {
 
-cd $HOME/share
-wget https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.gz
-tar xzf boost_1_73_0.tar.gz
-cd boost_1_73_0
-./bootstrap.sh --prefix=$HOME/opt
-./b2 install
+    cd $HOME/share
+    wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-4.0.3.tar.gz
+    tar xzf openmpi-4.0.3.tar.gz
+    cd openmpi-4.0.3
+    ./configure --prefix=$HOME/opt
+    make all install
+}
+
+function make_boost {
+
+    cd $HOME/share
+    wget https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.gz
+    tar xzf boost_1_73_0.tar.gz
+    cd boost_1_73_0
+    ./bootstrap.sh --prefix=$HOME/opt
+    ./b2 install
+}
+
+
+
+function make_scons {
+    cd $HOME/share
+    wget http://prdownloads.sourceforge.net/scons/scons-3.1.2.tar.gz
+    tar xzf scons-3.1.2.tar.gz
+    cd scons-3.1.2
+    python setup.py install --prefix=$HOME/opt
+}
+
+function make_zlib {
+    cd $HOME/share
+    wget https://zlib.net/zlib-1.2.11.tar.gz
+    tar xzf zlib-1.2.11.tar.gz
+    cd zlib-1.2.11
+    ./configure --prefix=$HOME/opt
+    make -j
+    make install
+}
+
+function rosetta {
+    # this requires the archive file already existing in folder
+    cd $HOME/share
+    tar xzf rosetta_src_3.11_bundle.tgz
+    cd rosetta_src_3.11_bundle/main/source
+    ./scons.py -j$1 mode=release extras=mpi $HOME/opt/bin       
+    
+}
+
+# base c++ cluster
+make_gcc
+make_openmpi
+make_boost
+
+# rosetta stuff 
+make_scons
+make_zlib
 
 
