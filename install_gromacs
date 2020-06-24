@@ -22,7 +22,7 @@ function hwloc_install {
     make install       
 }
 
-function gmx_install {
+function gmx_install_mpi {
 
     
     
@@ -33,14 +33,35 @@ function gmx_install {
     cd gromacs-2020
     mkdir build
     cd build
-#    cmake .. -DCMAKE_INSTALL_PREFIX=${HOME}/opt -DBUILD_SHARED_LIBS=OFF -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_FLAGS=-fPIC -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_GPU=ON -DGMX_BUILD_OWN_FFTW=ON -DGMX_SIMD=AVX_256 -DGMX_MPI=ON -DGMX_DEFAULT_SUFFIX=OFF           
-    cmake .. -DCMAKE_INSTALL_PREFIX=${HOME}/opt -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BUILD_OWN_FFTW=ON -DGMX_SIMD=AVX_256 -DGMX_MPI=ON -DGMX_GPU=OFF
+    cmake .. -DCMAKE_INSTALL_PREFIX=${HOME}/opt -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BUILD_OWN_FFTW=ON -DGMX_SIMD=AVX_256 -DGMX_MPI=ON -DGMX_GPU=OFF    
     
     make -j $(NCORES)
     make check -j $(NCORES)    
+    make install   
+    cd $HOME/share
+    rm -r gromacs-2020  
+}
+
+function gmx_install_gpu {    
+    
+    cd $HOME/share
+    wget http://ftp.gromacs.org/pub/gromacs/gromacs-2020.tar.gz
+    tar xzf gromacs-2020.tar.gz
+    rm gromacs-2020.tar.gz
+    cd gromacs-2020
+    mkdir build
+    cd build
+    cmake .. -DCMAKE_INSTALL_PREFIX=${HOME}/opt -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_GPU=ON -DGMX_BUILD_OWN_FFTW=ON -DGMX_SIMD=AVX_256 -DGMX_MPI=ON -DGMX_DEFAULT_SUFFIX=OFF
+        
+    make -j $(NCORES)
+    make check -j $(NCORES)    
     make install 
+    cd $HOME/share
+    rm -r gromacs-2020    
 }
 
 load
 #hwloc_install
-gmx_install
+#gmx_install_mpi
+gmx_install_gpu
+
