@@ -1,0 +1,37 @@
+#!/bin/bash
+HOME=/home/mayer
+mkdir $HOME/opt
+mkdir $HOME/share
+
+
+NCORES=$1
+
+function load {
+    export PATH=$HOME/opt/bin:$PATH
+    export LD_LIBRARY_PATH=$HOME/opt/lib64:$LD_LIBRARY_PATH
+}
+
+function gmx_install {+
+    cd $HOME/share
+    wget http://ftp.gromacs.org/pub/gromacs/gromacs-2020.tar.gz
+    tar xzf gromacs-2020.tar.gz
+    cd gromacs-2020
+    mkdir build
+    cd build
+    
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX=${HOME}/opt \
+        -DBUILD_SHARED_LIBS=OFF \
+        -DREGRESSIONTEST_DOWNLOAD=ON \
+        -DGMX_GPU=ON \
+        -DGMX_BUILD_OWN_FFTW=ON \
+        -DGMX_SIMD=AVX_256 \
+        -DGMX_MPI=ON \
+        -DGMX_DEFAULT_SUFFIX=OFF 
+    make -j $(NCORES)
+    make check -j $(NCORES)    
+    make install 
+}
+
+load
+gmx_install
