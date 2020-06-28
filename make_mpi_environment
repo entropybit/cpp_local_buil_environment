@@ -74,16 +74,14 @@ function make_rosetta {
 }
 # base c++ cluster
 make_gcc
+export PATH=$HOME/opt/bin:$PATH
+export LD_LIBRARY_PATH=$HOME/opt/lib64:$LD_LIBRARY_PATH
 make_openmpi
 make_boost
 
 
-export PATH=$HOME/opt/bin:$PATH
-export LD_LIBRARY_PATH=$HOME/opt/lib64:$LD_LIBRARY_PATH
-
-
 # rosetta stuff 
-make_scons
-make_zlib
-make_rosetta 40 # number of cores to user for compiling <- system dependent
+#make_scons
+#make_zlib
+#make_rosetta 40 # number of cores to user for compiling <- system dependent
 

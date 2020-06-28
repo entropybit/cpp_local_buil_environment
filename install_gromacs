@@ -61,7 +61,7 @@ function gmx_install_gpu {
 }
 
 load
-#hwloc_install
-#gmx_install_mpi
+hwloc_install
+gmx_install_mpi
 gmx_install_gpu
 
