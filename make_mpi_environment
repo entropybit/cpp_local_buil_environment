@@ -74,10 +74,10 @@ function make_rosetta {
     
 }
 # base c++ cluster
-make_gcc
+#make_gcc
 export PATH=$HOME/opt/bin:$PATH
 export LD_LIBRARY_PATH=$HOME/opt/lib64:$HOME/opt/lib:$LD_LIBRARY_PATH
-make_openmpi
+#make_openmpi
 make_boost
 
 
