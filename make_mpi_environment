@@ -37,8 +37,8 @@ function make_boost {
     wget https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.gz
     tar xzf boost_1_73_0.tar.gz
     cd boost_1_73_0
-    echo "using mpi ;" >> project-config.jam 
     ./bootstrap.sh --prefix=$HOME/opt
+    echo "using mpi ;" >> project-config.jam 
     ./b2 install
 }
 
