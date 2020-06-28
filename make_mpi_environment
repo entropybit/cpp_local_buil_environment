@@ -38,6 +38,7 @@ function make_boost {
     tar xzf boost_1_73_0.tar.gz
     cd boost_1_73_0
     ./bootstrap.sh --prefix=$HOME/opt
+    echo "using mpi ;" > $HOME/share/boost_1_73_0/user-config.jam
     ./b2 install
 }
 
